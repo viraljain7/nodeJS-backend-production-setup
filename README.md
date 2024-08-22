@@ -21,3 +21,13 @@
    > ```js
    >   npx husky init
    > ```
+
+4. Typescript and Nodemon Setup
+
+   > ```js
+   >  npm i -D typescript nodemon @types/node ts-node
+   > ```
+
+   > ```js
+   >  npm tsc --init
+   > ```

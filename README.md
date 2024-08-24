@@ -123,14 +123,14 @@
    > ```js
    > npm install --save-dev @commitlint/config-conventional @commitlint/cli
    > ```
-   >
-   > Add File in `.husky` directory and named as `commit-msg` then paste below code
+
+   - Add File in `.husky` directory and named as `commit-msg` then paste below code
 
    > ```js
    > npx --no-install commitlint --edit "$1"
    > ```
-   >
-   > Add File in `root` folder and named as `commitlint.config.js` then paste below code
+
+   - Add File in `root` folder and named as `commitlint.config.js` then paste below code
 
    > ```js
    > module.exports = {
@@ -157,3 +157,81 @@
    >   },
    > };
    > ```
+
+8. Eslint
+
+   > ```js
+   > npm install --save-dev eslint @eslint/js @types/eslint__js typescript typescript-eslint
+   > ```
+
+- create an `eslint.config.js` config file in the root of your project, and populate it with the following:
+
+  > ```js
+  > // @ts-check
+  >
+  > import eslint from "@eslint/js";
+  > import tseslint from "typescript-eslint";
+  > //import eslintConfigPrettier from 'eslint-config-prettier'
+  >
+  > export default tseslint.config({
+  >   languageOptions: {
+  >     parserOptions: {
+  >       project: true,
+  >       tsconfigRootDir: import.meta.dirname,
+  >     },
+  >   },
+  >   files: ["**/*.ts"],
+  >   extends: [
+  >     eslint.configs.recommended,
+  >     ...tseslint.configs.recommendedTypeChecked,
+  >   ],
+  >   rules: {
+  >     "no-console": "error",
+  >     // 'no-useless-catch': 0,
+  >     quotes: ["error", "single", { allowTemplateLiterals: true }],
+  >   },
+  > });
+  > ```
+
+- Add below code in `.husky/pre-commit` file
+  > ```js
+  > npx lint-staged
+  > ```
+- `package.json` code be like
+  > ```js
+  > {
+  > "name": "production-node-setup",
+  > "version": "1.0.0",
+  > "main": "src/server.ts",
+  > "type": "module",
+  > "scripts": {
+  >   "dist": "npx tsc",
+  >   "dev": "nodemon src/server.ts",
+  >   "start": "node dist/server.ts",
+  >   "lint": "eslint",
+  >   "lint:fix": "eslint --fix",
+  >   "prepare": "husky"
+  > },
+  > "author": "viraljain",
+  > "license": "ISC",
+  > "lint-staged": {
+  >   "*.ts": [
+  >     "npm run lint:fix"
+  >   ]
+  > },
+  > "description": "",
+  > "devDependencies": {
+  >   "@commitlint/cli": "^19.4.0",
+  >   "@commitlint/config-conventional": "^19.2.2",
+  >   "@eslint/js": "^9.9.1",
+  >   "@types/eslint__js": "^8.42.3",
+  >   "@types/node": "^22.5.0",
+  >   "eslint": "^9.9.1",
+  >   "husky": "^9.1.5",
+  >   "lint-staged": "^15.2.9",
+  >   "nodemon": "^3.1.4",
+  >   "typescript": "^5.5.4",
+  >   "typescript-eslint": "^8.2.0"
+  > }
+  > }
+  > ```

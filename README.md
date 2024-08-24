@@ -31,3 +31,50 @@
    > ```js
    >  npm tsc --init
    > ```
+
+5. Folder Structure
+
+- Run below command in src directory
+
+```js
+mkdir config constant controller model router service types util middleware
+```
+
+- And run below command in root directory
+
+```js
+mkdir ngnix script logs public test docker
+```
+
+```js
+touch ngnix/.gitkeep script/.gitkeep logs/.gitignore test/.gitkeep public/.gitkeep docker/.gitkeep
+```
+
+#### Folder Structure Sholud be look like this
+
+> ```
+> ├── docker
+> ├── logs
+> ├── ngnix
+> ├── public
+> ├── script
+> ├── src
+> │ ├── config
+> │ ├── constant
+> │ ├── controller
+> │ ├── middleware
+> │ ├── model
+> │ ├── router
+> │ ├── service
+> │ ├── types
+> │ ├── util
+> │ ├── `app.ts`
+> │ └── `server.ts`
+> ├── test
+> ├── .gitignore
+> ├── package.json
+> ├── package-lock.json
+> ├── README.md
+> ├── Topics.md
+> └── tsconfig.json
+> ```

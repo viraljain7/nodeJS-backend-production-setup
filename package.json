@@ -2,7 +2,6 @@
   "name": "production-node-setup",
   "version": "1.0.0",
   "main": "src/server.ts",
-  "type": "module",
   "scripts": {
     "dist": "npx tsc",
     "dev": "nodemon src/server.ts",

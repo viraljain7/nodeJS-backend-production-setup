@@ -164,7 +164,7 @@
    > npm install --save-dev eslint @eslint/js @types/eslint__js typescript typescript-eslint
    > ```
 
-- create an `eslint.config.js` config file in the root of your project, and populate it with the following:
+- create an `eslint.config.mjs` config file in the root of your project, and populate it with the following:
 
   > ```js
   > // @ts-check
@@ -203,7 +203,6 @@
   > "name": "production-node-setup",
   > "version": "1.0.0",
   > "main": "src/server.ts",
-  > "type": "module",
   > "scripts": {
   >   "dist": "npx tsc",
   >   "dev": "nodemon src/server.ts",

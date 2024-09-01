@@ -50,7 +50,7 @@
     > touch ngnix/.gitkeep script/.gitkeep logs/.gitignore test/.gitkeep public/.gitkeep docker/.gitkeep
     > ```
 
--   Folder Structure Sholud be look like this
+-   Folder Structure Should be look like this
 
     > ```
     > ├── docker
@@ -79,7 +79,7 @@
     > └── tsconfig.json
     > ```
 
--   package.json sholud be look like
+-   package.json should be look like
 
     > ```js
     >  "main": "src/server.ts",
@@ -118,7 +118,7 @@
     > }
     > ```
 
-7. Commit Lint Setup
+6. Commit Lint Setup
 
     > ```js
     > npm install --save-dev @commitlint/config-conventional @commitlint/cli
@@ -142,7 +142,7 @@
     > }
     > ```
 
-8. Eslint Setup
+7. Eslint Setup
 
     > ```js
     > npm install --save-dev eslint @eslint/js @types/eslint__js typescript typescript-eslint
@@ -189,7 +189,7 @@
     >  "main": "src/server.js",
     > "scripts": {
     >   "dist": "npx tsc",
-    >   "dev": "nodemon src/server.js",
+    >   "dev": "nodemon src/server.ts",
     >   "start": "node dist/server.js",
     >   "lint": "eslint .",
     >   "lint:fix": "eslint . --fix",
@@ -219,7 +219,7 @@
     > }
     > ```
 
-9.  Prettier Setup
+8.  Prettier Setup
 
     > ```js
     >  npm install --save-dev --save-exact prettier  eslint-config-prettier
@@ -306,6 +306,53 @@
     >   "typescript": "^5.5.4",
     >   "typescript-eslint": "^8.2.0"
     > }
+    > }
+    > ```
+
+9. Environment Variable Setup
+    > ```js
+    > npm i  cross-env dotenv-flow
+    > ```
+
+-   `package.json` code be like
+
+    > ```js
+    > {
+    > ...... code
+    >   "scripts": {
+    >    "dist": "npx tsc",
+    >    "dev": "cross-env NODE_ENV=development nodemon src/server.ts",
+    >    "start": "cross-env NODE_ENV=production node dist/server.js",
+    >    "lint": "eslint ",
+    >    "lint:fix": "eslint --fix",
+    >    "format:check": "prettier . --check",
+    >    "format:fix": "prettier . --fix",
+    >    "prepare": "husky"
+    >  },
+    > ..... code
+    > }
+    > ```
+
+-   `nodemon.json` code be like
+
+    > ```js
+    > {
+    > "ext": ".ts",
+    > "ignore": ["dist", "node_modules"]
+    > }
+    > ```
+
+-   `config/config.ts` code be like
+    > ```js
+    > import dotenvFlow from 'dotenv-flow'
+    >
+    > dotenvFlow.config()
+    >
+    > export default {
+    >     ENV: process.env.ENV,
+    >     PORT: process.env.PORT,
+    >     SERVER_URL: process.env.SERVER_URL,
+    >     DATABASE_URL: process.env.DATABASE_URL
     > }
     > ```
 

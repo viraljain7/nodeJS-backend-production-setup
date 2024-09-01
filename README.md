@@ -356,3 +356,132 @@
     > }
     > ```
 
+10. Expressjs Setup
+
+    > ```js
+    > bun i express
+    > bun i @types/express -D
+    > ```
+
+-   `app.ts`
+
+    > ```js
+    > import express, { Application } from 'express'
+    >
+    > const app: Application = express()
+    >
+    > export default app
+    >
+    > ```
+
+-   `server.ts`
+
+    > ```js
+    > import app from './app'
+    > import config from './config/config'
+    >
+    > const server = app.listen(config.PORT)
+    >
+    > ;(() => {
+    >     try {
+    >         // Database connection
+    >         console.info(`Application Started`, {
+    >             meta: {
+    >                 PORT: config.PORT,
+    >                 SERVER_URL: config.SERVER_URL
+    >             }
+    >         })
+    >     } catch (err) {
+    >         console.error(`Application Started`, { meta: err })
+    >
+    >         server.close((error) => {
+    >             if (error) console.error(`Application Started`, { meta: err })
+    >             process.exit(1)
+    >         })
+    >     }
+    > })()
+    > ```
+
+-   `types/types.ts`
+
+    > ```js
+    > export type THttpResponse = {
+    >     success: boolean
+    >     statusCode: number
+    >     request: {
+    >         ip?: string | number
+    >         url: string
+    >     }
+    >     message: string
+    >     data: unknown
+    > }
+    >
+    > export type THttpError = {
+    >     success: boolean
+    >     statusCode: number
+    >     request: {
+    >         ip?: string | number
+    >         url: string
+    >     }
+    >     message: string
+    >     data: unknown
+    >     trace?: object | null
+    > }
+    >
+    >
+    > ```
+
+-   `router/apiRouter.ts`
+
+    > ```js
+    > import { Router } from 'express'
+    > import apiController from '../controller/apiController'
+    >
+    > const router = Router()
+    >
+    > router.route('/self').get(apiController.self)
+    >
+    > export default router
+    > ```
+
+-   `controller/apiController.ts`
+
+    > ```js
+    > export default {
+    >     self: (_: Request, res: Response) => {
+    >         try {
+    >             res.sendStatus(200)
+    >         } catch (error) {
+    >             res.sendStatus(500)
+    >         }
+    >     }
+    > }
+    >
+    > ```
+
+-   `util/errorObject.ts`
+-   `util/httpError.ts`
+-   `util/httpsResponse.ts`
+-   `constant/application.ts`
+-   `constant/responseMessage.ts`
+
+11. Global Error Handler Setup
+
+-   `middleware/globalErrorHandler.ts`
+
+    > ```js
+    > import { NextFunction, Request, Response } from 'express'
+    > import { THttpError } from '../types/types'
+    >
+    > // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    > export default (err: THttpError, _: Request, res: Response, __: NextFunction) => {
+    >     res.status(err.statusCode).json(err)
+    > }
+    > ```
+
+-   `src/app.ts`
+
+12. 404 Handler
+
+-   `src/app.ts`
+

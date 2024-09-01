@@ -11,5 +11,8 @@ app.use(express.static(path.join(__dirname, '../', 'public')))
 //Routes
 app.use('/api/v1', router)
 
+//Global Error Handler
+app.use(globalErrorHandler)
+
 export default app
 

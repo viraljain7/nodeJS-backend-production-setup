@@ -1,18 +1,23 @@
 # Steps for Production Grade Nodejs Backend Setup
 
-1. Node Js initialization
+## 1. Node Js initialization
 
+-   code
     > ```js
     >   npm init
     > ```
 
-2. Git & Github initialization
+## 2. Git & Github initialization
+
+-   code
 
     > ```js
     >   git init
     > ```
 
-3. husky initialization
+## 3. husky initialization
+
+-   code
 
     > ```js
     >   npm i husky lint-staged -D
@@ -22,7 +27,9 @@
     >   npx husky init
     > ```
 
-4. Typescript and Nodemon Setup
+## 4. Typescript and Nodemon Setup
+
+-   code
 
     > ```js
     >  npm i -D typescript nodemon @types/node ts-node
@@ -32,7 +39,7 @@
     >  npm tsc --init
     > ```
 
-5. Folder Structure
+## 5. Folder Structure
 
 -   Run below command in src directory
 
@@ -118,19 +125,21 @@
     > }
     > ```
 
-6. Commit Lint Setup
+## 6. Commit Lint Setup
+
+-   code
 
     > ```js
     > npm install --save-dev @commitlint/config-conventional @commitlint/cli
     > ```
 
-    - Add File in `.husky` directory and named as `commit-msg` then paste below code
+    -   Add File in `.husky` directory and named as `commit-msg` then paste below code
 
     > ```js
     > npx --no-install commitlint --edit "$1"
     > ```
 
-    - Add File in `root` folder and named as `commitlint.config.js` then paste below code
+    -   Add File in `root` folder and named as `commitlint.config.js` then paste below code
 
     > ```js
     > module.exports = {
@@ -142,7 +151,9 @@
     > }
     > ```
 
-7. Eslint Setup
+## 7. Eslint Setup
+
+-   code
 
     > ```js
     > npm install --save-dev eslint @eslint/js @types/eslint__js typescript typescript-eslint
@@ -219,7 +230,9 @@
     > }
     > ```
 
-8.  Prettier Setup
+## 8. Prettier Setup
+
+-   code
 
     > ```js
     >  npm install --save-dev --save-exact prettier  eslint-config-prettier
@@ -309,7 +322,10 @@
     > }
     > ```
 
-9. Environment Variable Setup
+## 9. Environment Variable Setup
+
+-   code
+
     > ```js
     > npm i  cross-env dotenv-flow
     > ```
@@ -356,7 +372,9 @@
     > }
     > ```
 
-10. Expressjs Setup
+## 10. Expressjs Setup
+
+-   code
 
     > ```js
     > bun i express
@@ -465,7 +483,7 @@
 -   `constant/application.ts`
 -   `constant/responseMessage.ts`
 
-11. Global Error Handler Setup
+## 11. Global Error Handler Setup
 
 -   `middleware/globalErrorHandler.ts`
 
@@ -481,7 +499,20 @@
 
 -   `src/app.ts`
 
-12. 404 Handler
+## 12. 404 Handler
 
 -   `src/app.ts`
+
+    > ```js
+    >  //Routes ...........
+    >  // 404 Handler
+    >  app.use((req: Request, \_: Response, next: NextFunction) => {
+    >  try {
+    >  throw new Error(responseMessage.NOT_FOUND('route'))
+    >  } catch (err) {
+    >  httpError(next, err, req, 404)
+    >  }
+    >  })
+    >  //Global Error Handler .............
+    > ```
 

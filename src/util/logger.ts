@@ -1,8 +1,9 @@
+ 
+ 
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
- 
- 
+
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
- 
+
 import util from 'util'
 import { createLogger, format, transports } from 'winston'
 import { EApplicationEnvironment } from '../constant/application'
@@ -10,14 +11,30 @@ import path from 'path'
 import { ConsoleTransportInstance, FileTransportInstance } from 'winston/lib/winston/transports'
 import config from '../config/config'
 import * as sourceMapSupport from 'source-map-support'
+import { red, blue, yellow, green, magenta } from 'colorette'
 
 sourceMapSupport.install()
 
+const colorizeLevel = (level: string) => {
+    switch (level) {
+        case 'ERROR':
+            return red(level)
+        case 'INFO':
+            return blue(level)
+        case 'WARN':
+            return yellow(level)
+        default:
+            return level
+    }
+}
+
+ 
 const consoleLogFormat = format.printf((info) => {
     const { level, message, timestamp, meta = {} } = info
 
-    const customLevel = level.toLowerCase()
-    const customTimestamp = timestamp
+     
+    const customLevel = colorizeLevel(level.toUpperCase())
+    const customTimestamp = green(timestamp as string)
 
     const customMessage = message
 
@@ -27,16 +44,17 @@ const consoleLogFormat = format.printf((info) => {
         colors: true
     })
 
-    const customLog = `${customLevel} [${customTimestamp}] ${customMessage}\n${'META'} ${customMeta}\n`
+    const customLog = `${customLevel} [${customTimestamp}] ${customMessage}\n${magenta('META')} ${customMeta}\n`
 
     return customLog
 })
-
 const consoleTransport = (): Array<ConsoleTransportInstance> => {
     if (config.ENV === EApplicationEnvironment.DEVELOPMENT) {
         return [
+             
             new transports.Console({
                 level: 'info',
+                 
                 format: format.combine(format.timestamp(), consoleLogFormat)
             })
         ]
@@ -45,6 +63,7 @@ const consoleTransport = (): Array<ConsoleTransportInstance> => {
     return []
 }
 
+ 
 const fileLogFormat = format.printf((info) => {
     const { level, message, timestamp, meta = {} } = info
 
@@ -63,6 +82,7 @@ const fileLogFormat = format.printf((info) => {
     }
 
     const logData = {
+         
         level: level.toUpperCase(),
         message,
         timestamp,
@@ -74,14 +94,17 @@ const fileLogFormat = format.printf((info) => {
 
 const FileTransport = (): Array<FileTransportInstance> => {
     return [
+         
         new transports.File({
             filename: path.join(__dirname, '../', '../', 'logs', `${config.ENV}.log`),
             level: 'info',
+             
             format: format.combine(format.timestamp(), fileLogFormat)
         })
     ]
 }
 
+ 
 export default createLogger({
     defaultMeta: {
         meta: {}

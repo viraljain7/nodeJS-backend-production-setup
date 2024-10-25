@@ -1,6 +1,3 @@
- 
- 
-
 import { Request, Response } from 'express'
 import { THttpResponse } from '../types/types'
 import config from '../config/config'
@@ -21,6 +18,7 @@ export default (req: Request, res: Response, responseStatusCode: number, respons
     }
 
     // Log
+     
     logger.info(`CONTROLLER_RESPONSE`, {
         meta: response
     })

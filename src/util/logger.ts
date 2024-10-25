@@ -1,14 +1,17 @@
- 
- 
- 
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
+ 
+ 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+ 
 import util from 'util'
 import { createLogger, format, transports } from 'winston'
 import { EApplicationEnvironment } from '../constant/application'
 import path from 'path'
 import { ConsoleTransportInstance, FileTransportInstance } from 'winston/lib/winston/transports'
 import config from '../config/config'
+import * as sourceMapSupport from 'source-map-support'
+
+sourceMapSupport.install()
 
 const consoleLogFormat = format.printf((info) => {
     const { level, message, timestamp, meta = {} } = info
